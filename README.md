@@ -7,7 +7,7 @@ A python package to manage Estudios
 
 Ejemplo de doctorados.wsgi
 
-'''
+```
 import os, sys
 
 curdir = os.path.dirname(os.path.abspath(__file__))
@@ -25,10 +25,10 @@ def application(environ, start_response):
                         ('Content-Length', str(len(output)))]
     start_response(status, response_headers)
     return [output]
-'''
+```
 
 Ejemplo de planesEstudio.wsgi
-'''
+```
 # -*- coding: utf-8 -*-
 
 import os, sys, urlparse
@@ -37,10 +37,9 @@ curdir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(curdir)
 
 from estudios.estudio import Estudio
+#from estudios.lista_estudios import Programas_Doctorado
 
 def application(environ, start_response):
-    """ Obtener todos los estudios de tipo doctorado """
-
     status = '200 OK'
     output = ''
 
@@ -55,20 +54,23 @@ def application(environ, start_response):
         start_response(status, response_headers)
         return [output]
 
-    e = Estudio(codigo_estudio_sigma)
-    output += e.renderPlanesSelect(selectId='planes')
+    try:
+        e = Estudio(codigo_estudio_sigma)
+        output += e.renderPlanesSelect(selectId='planes')
+    except Exception as e:
+        output += '<p>No hay planes del estudio indicado</p>'
 
     response_headers = [('Content-type', 'text/html'),
                         ('Content-Length', str(len(output)))]
     start_response(status, response_headers)
     return [output]
-'''
+```
 
 ## Consideraciones
 
 Para que funcione correctamente hay que tener instalado invenio y ademas las siguientes tablas definidas en la BD
 
-'''
+```
 CREATE TABLE uz_ESTUDIOS (
     ano_academico INT UNSIGNED NOT NULL,
     codigo_estudio_sigma INT unsigned NOT NULL PRIMARY KEY,
@@ -95,4 +97,5 @@ CREATE TABLE uz_PLANES (
     codigo_estudio_sigma INT unsigned NOT NULL,
     FOREIGN KEY (codigo_estudio_sigma) references uz_ESTUDIOS(codigo_estudio_sigma) ON DELETE CASCADE
 ) ENGINE = InnoDB ;
-'''
+```
+
