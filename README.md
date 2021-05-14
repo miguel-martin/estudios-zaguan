@@ -5,90 +5,9 @@ A python package to manage Estudios
 
 ## Uso
 
-Ejemplo de doctorados.wsgi
-
-```
-import os, sys
-
-curdir = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(curdir)
-
-from estudios.lista_estudios import Programas_Doctorado
-
-def application(environ, start_response):
-    status = '200 OK'
-
-    pd = Programas_Doctorado()
-    output = pd.renderSelect(selectId='lista_doctorados')
-
-    response_headers = [('Content-type', 'text/html'),
-                        ('Content-Length', str(len(output)))]
-    start_response(status, response_headers)
-    return [output]
-```
-
-Ejemplo de planesEstudio.wsgi
-```
-# -*- coding: utf-8 -*-
-
-import os, sys, urlparse
-
-curdir = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(curdir)
-
-from estudios.estudio import Estudio
-#from estudios.lista_estudios import Programas_Doctorado
-
-def application(environ, start_response):
-    status = '200 OK'
-    output = ''
-
-    try:
-        params = urlparse.parse_qs(environ["QUERY_STRING"])
-        codigo_estudio_sigma = int(params['codigo_estudio_sigma'][0])
-    except Exception as e:
-        output += "Debe proporcionar un valor al parametro codigo_estudio_sigma"
-        output += "\nERROR: "+ e.message
-        response_headers = [('Content-type', 'text/plain'),
-                        ('Content-Length', str(len(output)))]
-        start_response(status, response_headers)
-        return [output]
-
-    try:
-        e = Estudio(codigo_estudio_sigma)
-        output += e.renderPlanesSelect(selectId='planes')
-    except Exception as e:
-        output += '<p>No hay planes del estudio indicado</p>'
-
-    response_headers = [('Content-type', 'text/html'),
-                        ('Content-Length', str(len(output)))]
-    start_response(status, response_headers)
-    return [output]
-```
-
-Ejemplo de cómo consumir el WS que provee el JSON de los PD
-```
-<script language="javascript" type="text/javascript">
-
-    const getProgramasDoctorado = () => {
-        console.log('Obteniendo programas de doctorado...');
-        fetch('/uz_scripts/programas-doctorado', {
-            method: 'get'
-        })
-       .then(response => response.text())
-       .then(data => {
-              document.querySelector('#pd-wrapper').innerHTML=data
-              //console.log(data)
-        })
-       .catch(err => {
-           console.log('Error obteniendo programas de doctorado')
-        })
-    };
-
-    document.addEventListener('DOMContentLoaded', () => {
-        // Cuando este cargado el DOM, obtener los PD
-        getProgramasDoctorado();
-    });
+[Ejemplo de WSGI para obtener json de doctorados](samples/wsgi/programasDoctorado.wsgi)
+[Ejemplo de WSGI para obtener json de codigos de plan de un estudio determinado](samples/wsgi/planesEstudioJson.wsgi)
+[Ejemplo de como consumir con JS el endopoint de doctorados](samples/js/index.js)
 
 </script>
 ```

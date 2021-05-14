@@ -86,4 +86,5 @@ class Estudio(object):
         out += '</select>'
         return out
 
-       
+    def planesJson(self):
+        return json.dumps(self._planes)       
