@@ -58,7 +58,7 @@ class Estudio(object):
 
 
     def toJson(self):
-        return json(self.__dict__)
+        return json.dumps(self.__dict__)
 
     
     @property 

@@ -1,3 +1,5 @@
+import json
+
 from invenio.dbquery import run_sql
 
 from .estudio import Estudio
@@ -42,6 +44,15 @@ class Lista_Estudios(object):
         return out
 
 
+    def toJson(self):
+        # Devuelve un json con los codigos y nombres_es de los estudios, ordenados por nombre
+        ordenados_por_nombre = sorted(self.names_es().items(), key=lambda x: x[1])
+
+        out = {}
+        for cod in ordenados_por_nombre:
+            out[cod[0]]=cod[1]
+        return json.dumps(out)        
+ 
 class Programas_Doctorado(Lista_Estudios):
 
     def __init__(self):

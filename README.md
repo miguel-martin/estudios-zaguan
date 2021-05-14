@@ -66,6 +66,33 @@ def application(environ, start_response):
     return [output]
 ```
 
+Ejemplo de cómo consumir el WS que provee el JSON de los PD
+```
+<script language="javascript" type="text/javascript">
+
+    const getProgramasDoctorado = () => {
+        console.log('Obteniendo programas de doctorado...');
+        fetch('/uz_scripts/programas-doctorado', {
+            method: 'get'
+        })
+       .then(response => response.text())
+       .then(data => {
+              document.querySelector('#pd-wrapper').innerHTML=data
+              //console.log(data)
+        })
+       .catch(err => {
+           console.log('Error obteniendo programas de doctorado')
+        })
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Cuando este cargado el DOM, obtener los PD
+        getProgramasDoctorado();
+    });
+
+</script>
+```
+
 ## Consideraciones
 
 Para que funcione correctamente hay que tener instalado invenio y ademas las siguientes tablas definidas en la BD
