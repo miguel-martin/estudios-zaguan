@@ -78,4 +78,12 @@ class Estudio(object):
         if '_planes' in self.__dict__:
             return self._planes
         return []
+    
+    def renderPlanesSelect(self, selectId='planes'):
+        out = '<select id="{}">'.format(selectId)
+        for p in self._planes:
+            out += '<option value="{}">{}</option>'.format(p,p)
+        out += '</select>'
+        return out
+
        
