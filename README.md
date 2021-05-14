@@ -5,9 +5,9 @@ A python package to manage Estudios
 
 ## Uso
 
-[Ejemplo de WSGI para obtener json de doctorados](samples/wsgi/programasDoctorado.wsgi)
-[Ejemplo de WSGI para obtener json de codigos de plan de un estudio determinado](samples/wsgi/planesEstudioJson.wsgi)
-[Ejemplo de como consumir con JS el endopoint de doctorados](samples/js/index.js)
+* [Ejemplo de WSGI para obtener json de doctorados](samples/wsgi/programasDoctoradoJson.wsgi)
+* [Ejemplo de WSGI para obtener json de codigos de plan de un estudio determinado](samples/wsgi/planesEstudioJson.wsgi)
+* [Ejemplo de como consumir con JS el endopoint de doctorados](samples/js/index.js)
 
 </script>
 ```
