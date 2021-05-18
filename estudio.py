@@ -87,4 +87,7 @@ class Estudio(object):
         return out
 
     def planesJson(self):
-        return json.dumps(self._planes)       
+        myDict = {}
+        for p in self._planes:
+            myDict[p]=p
+        return json.dumps(myDict)       
